@@ -1,27 +1,34 @@
 "use client";
 
 import { ShowMoreProps } from "@/types";
-import { useRouter } from "next/navigation";
-import CustomButton from "./CustomButton";
 import { updateSearchParams } from "@/utils";
+import { useRouter } from "next/navigation";
+import { useInView } from "react-intersection-observer";
+import CustomButton from "./CustomButton";
+import { useEffect } from "react";
+import Spinner from "./Spinner";
 
 const ShowMore = ({ pageNumber, isNext }: ShowMoreProps) => {
+  const { ref, inView, entry } = useInView({ threshold: 0.9 });
   const router = useRouter();
 
   const handleNavigation = () => {
     const newLimit = (pageNumber + 1) * 10;
     const newPathName = updateSearchParams("limit", `${newLimit}`);
-    router.push(newPathName);
+    router.push(newPathName, { scroll: false });
   };
+
+  useEffect(() => {
+    if (inView) {
+      handleNavigation();
+    }
+  }, [inView]);
   return (
     <div className="w-full flex items-center justify-center gap-5 mt-10">
       {!isNext && (
-        <CustomButton
-          onClick={handleNavigation}
-          text="Load more"
-          className="bg-primary-blue rounded-full text-white"
-          type="button"
-        />
+        <div ref={ref}>
+          <Spinner />
+        </div>
       )}
     </div>
   );

@@ -27,7 +27,7 @@ const CarCard = ({ car }: CarCardProps) => {
       <div className="relative w-full h-40 my-3 object-contain">
         <Image
           alt="car model"
-          src="/hero.png"
+          src="https://cdn.imagin.studio/getimage"
           fill
           priority
           className="object-contain"
