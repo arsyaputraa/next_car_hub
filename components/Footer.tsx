@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { footerLinks } from "@/constants";
@@ -28,13 +28,11 @@ const Footer = () => {
             >
               <h3 className="font-bold">{link.title}</h3>
               {link.links.map((item) => (
-                <Link
-                  key={item.title}
-                  href={item.url}
-                  className="text-gray-500"
-                >
-                  {item.title}
-                </Link>
+                <Fragment key={item.title}>
+                  <Link href={item.url} className="text-gray-500">
+                    {item.title}
+                  </Link>
+                </Fragment>
               ))}
             </div>
           ))}
